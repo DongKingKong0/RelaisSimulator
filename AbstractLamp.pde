@@ -8,6 +8,7 @@ abstract class AbstractLamp{
   boolean status;
   boolean showDescription;
   boolean clickable;
+  String description;
   
   AbstractLamp(int s, int x, int y, int r, int g, int b){
     size = s;
@@ -15,6 +16,8 @@ abstract class AbstractLamp{
     ypos = y;
     lampColor = color(r, g, b);
     clickable = true;
+    showDescription = true;
+    description = "";
   }
   
   
@@ -35,13 +38,14 @@ abstract class AbstractLamp{
     if(showDescription){
       fill(200);
       textSize(size / 2);
-      text("2^" + value, xpos, ypos - size);
+      text(description, xpos, ypos - size);
     }
   }
   
   
   void setValue(int v, boolean s){
     value = v;
+    description = "2^" + v;
     showDescription = s;
   }
   
