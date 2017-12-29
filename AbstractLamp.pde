@@ -60,6 +60,11 @@ abstract class AbstractLamp{
   }
   
   
+  void toggleStatus(){
+    status = !status;
+  }
+  
+  
   void setUnclickable(){
     clickable = false;
   }
