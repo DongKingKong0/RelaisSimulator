@@ -1,4 +1,4 @@
-class Lamp{
+abstract class AbstractLamp{
   
   int size;
   int xpos, ypos;
@@ -9,50 +9,18 @@ class Lamp{
   boolean showDescription;
   boolean clickable;
   
-  Lamp(int s, int x, int y, int r, int g, int b, int i){
+  AbstractLamp(int s, int x, int y, int r, int g, int b){
     size = s;
     xpos = x;
     ypos = y;
     lampColor = color(r, g, b);
     clickable = true;
-    index = i;
   }
   
   
   void update(){
     if(mousePressed && !pmousePressed && clickable && pointInCircle(mouseX, mouseY, xpos, ypos, size + 5)){
       status = !status;
-    }
-  }
-  
-  
-  void calculateStatus(){//for the "lampsE" array
-    int numberOfActiveBits = 0;
-    if(index > 0){
-      if(lampsA[index - 1].getStatus()){
-        numberOfActiveBits ++;
-      }
-      if(lampsB[index - 1].getStatus()){
-        numberOfActiveBits ++;
-      }
-    }
-    if(index < maxNumber){
-      if(lampsU[index].getStatus()){
-        numberOfActiveBits ++;
-      }
-    }
-    
-    if(numberOfActiveBits % 2 == 1){
-      status = true;
-    }else{
-      status = false;
-    }
-    if(index > 0){
-      if(numberOfActiveBits > 1){
-        lampsU[index - 1].setStatus(true);
-      }else{
-        lampsU[index - 1].setStatus(false);
-      }
     }
   }
   
