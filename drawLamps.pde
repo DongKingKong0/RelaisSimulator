@@ -14,4 +14,6 @@ void drawLamps(){
   }
   switchPlus.draw();
   switchMinus.draw();
+  asPlus.draw();
+  asMinus.draw();
 }

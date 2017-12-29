@@ -9,6 +9,8 @@ LampU[] lampsU;
 LampE[] lampsE;
 LampPlus switchPlus;
 LampMinus switchMinus;
+LampPlus asPlus;
+LampMinus asMinus;
 
 void setup(){
   size(4 * lampSize * (maxNumber + 2), lampSize * 16);
@@ -16,10 +18,14 @@ void setup(){
   lampsB = new LampB[maxNumber];
   lampsU = new LampU[maxNumber];
   lampsE = new LampE[maxNumber + 1];
-  switchPlus = new LampPlus(lampSize, lampSize * 2, lampSize * 3);
+  switchPlus = new LampPlus(lampSize, lampSize * 2, lampSize * 5);
   switchPlus.setStatus(true);
-  switchMinus = new LampMinus(lampSize, lampSize * 2, lampSize * 6);
+  switchMinus = new LampMinus(lampSize, lampSize * 2, lampSize * 7);
   switchMinus.setUnclickable();
+  asPlus = new LampPlus(lampSize, lampSize * 2, lampSize * 12);
+  asPlus.setUnclickable();
+  asMinus = new LampMinus(lampSize, lampSize * 2, lampSize * 14);
+  asMinus.setUnclickable();
   for(int i = 0; i < lampsA.length; i ++){
     lampsA[i] = new LampA(lampSize, i * lampSize * 4 + lampSize * 8, lampSize * 3, i);
     lampsA[i].setValue(maxNumber - 1 - i, true);
@@ -34,7 +40,7 @@ void setup(){
     lampsU[i].setUnclickable();
   }
   for(int i = 0; i < lampsE.length; i ++){
-    lampsE[i] = new LampE(lampSize, i * lampSize * 4 + lampSize * 4, lampSize * 12, i);
+    lampsE[i] = new LampE(lampSize, i * lampSize * 4 + lampSize * 4, lampSize * 13, i);
     lampsE[i].setValue(maxNumber - i, true);
     lampsE[i].setUnclickable();
   }

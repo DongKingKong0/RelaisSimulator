@@ -11,6 +11,9 @@ void calculate(){
   
   switch(mode){
     case 0:
+    asPlus.setStatus(true);
+    asMinus.setStatus(false);
+    
     for(int i = 0; i < lampsE.length; i ++){
       lampsE[i].update();
       int numberOfActiveBits = 0;
@@ -43,6 +46,10 @@ void calculate(){
     }
     break;
     case 1:
+    for(int i = 0; i < lampsU.length; i ++){
+      lampsU[i].setStatus(false);
+    }
+    
     for(int i = 0; i < lampsE.length; i ++){
       lampsE[i].update();
       int numberOfActiveBits = 0;
@@ -54,23 +61,11 @@ void calculate(){
           numberOfActiveBits ++;
         }
       }
-      if(i < maxNumber){
-        if(lampsU[i].getStatus()){
-          numberOfActiveBits ++;
-        }
-      }
       
-      if(numberOfActiveBits % 2 == 1){
-        lampsE[i].setStatus(false);
-      }else{
+      if(numberOfActiveBits == 1){
         lampsE[i].setStatus(true);
-      }
-      if(i > 0){
-        if(numberOfActiveBits > 1){
-          lampsU[i - 1].setStatus(true);
-        }else{
-          lampsU[i - 1].setStatus(false);
-        }
+      }else{
+        lampsE[i].setStatus(false);
       }
     }
     break;
@@ -84,4 +79,6 @@ void calculate(){
   }else{
     mode = 1;
   }
+  asPlus.update();
+  asMinus.update();
 }
