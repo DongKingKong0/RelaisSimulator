@@ -1,61 +1,10 @@
+
+boolean pSwitchPlus, pSwitchMinus;
+
 void calculate(){
-  for(int i = 0; i < lampsA.length; i ++){
-    lampsA[i].update();
-  }
-  for(int i = 0; i < lampsB.length; i ++){
-    lampsB[i].update();
-  }
-  for(int i = 0; i < lampsU.length; i ++){
-    lampsU[i].update();
-  }
-  for(int i = 0; i < lampsE.length; i ++){
-    lampsE[i].update();
-  }
-  
-  switchPlus.update();
-  switchMinus.update();
-  switchMinus.setStatus(!switchPlus.getStatus());
-  if(switchPlus.getStatus()){
-    mode = 0;
-  }else{
-    mode = 1;
-  }
-  asPlus.update();
-  asMinus.update();
+  updateLamps();
   
   if(mode == 0){
-    /*int[] rowStates = new int[lampsE.length];
-    for(int i = 0; i < rowStates.length; i ++){
-      rowStates[i] = 0;
-      if(i > 0){
-        if(lampsA[i - 1].getStatus()){
-          rowStates[i] ++;
-        }
-        if(lampsB[i - 1].getStatus()){
-          rowStates[i] ++;
-        }
-      }
-      if(i < maxNumber){
-        if(lampsU[i].getStatus()){
-          rowStates[i] ++;
-        }
-      }
-    }
-    
-    for(int i = 0; i < rowStates.length; i ++){
-      if(rowStates[i] % 2 == 1){
-        lampsE[i].setStatus(true);
-      }else{
-        lampsE[i].setStatus(false);
-      }
-      if(i > 0){
-        if(rowStates[i] > 1){
-          lampsU[i - 1].setStatus(true);
-        }else{
-          lampsU[i - 1].setStatus(false);
-        }
-      }
-    }*/
     boolean[][] rowStates = new boolean[2][lampsA.length];
     for(int i = 0; i < rowStates[0].length; i ++){
       rowStates[0][i] = lampsA[i].getStatus();
@@ -132,6 +81,40 @@ void calculate(){
       }
     }
   }
+}
+
+
+void updateLamps(){
+  for(int i = 0; i < lampsA.length; i ++){
+    lampsA[i].update();
+  }
+  for(int i = 0; i < lampsB.length; i ++){
+    lampsB[i].update();
+  }
+  for(int i = 0; i < lampsU.length; i ++){
+    lampsU[i].update();
+  }
+  for(int i = 0; i < lampsE.length; i ++){
+    lampsE[i].update();
+  }
+  
+  switchPlus.update();
+  switchMinus.update();
+  if(switchPlus.getStatus() != pSwitchPlus){
+    switchMinus.setStatus(!switchPlus.getStatus());
+  }
+  if(switchMinus.getStatus() != pSwitchMinus){
+    switchPlus.setStatus(!switchMinus.getStatus());
+  }
+  if(switchPlus.getStatus()){
+    mode = 0;
+  }else{
+    mode = 1;
+  }
+  asPlus.update();
+  asMinus.update();
+  pSwitchPlus = switchPlus.getStatus();
+  pSwitchMinus = switchMinus.getStatus();
 }
 
 

@@ -21,7 +21,6 @@ void setup(){
   switchPlus = new LampPlus(lampSize, lampSize * 2, lampSize * 5);
   switchPlus.setStatus(true);
   switchMinus = new LampMinus(lampSize, lampSize * 2, lampSize * 7);
-  switchMinus.setUnclickable();
   asPlus = new LampPlus(lampSize, lampSize * 2, lampSize * 12);
   asPlus.setUnclickable();
   asMinus = new LampMinus(lampSize, lampSize * 2, lampSize * 14);
