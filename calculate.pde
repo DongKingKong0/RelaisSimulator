@@ -31,7 +31,7 @@ void calculate(){
     }
     int firstLampIndex = -1;
     for(int i = 0; i < rowStates[0].length; i ++){
-      if(!(lampsA[rowStates[0].length - i - 1].getStatus() && lampsB[rowStates[0].length - i - 1].getStatus()) && !(!lampsA[rowStates[0].length - i - 1].getStatus() && !lampsB[rowStates[0].length - i - 1].getStatus())){
+      if(lampsA[rowStates[0].length - i - 1].getStatus() ^ lampsB[rowStates[0].length - i - 1].getStatus()){
         firstLampIndex = rowStates[0].length - i - 1;
       }
     }
@@ -63,9 +63,9 @@ void calculate(){
         }
         boolean[][] result = addition(rowStates);
         for(int i = 0; i < result[0].length; i ++){
-          result[0][i] = !result[0][i];
+          result[1][i] = !result[1][i];
         }
-        
+        result[1][0] = false;
         for(int i = 0; i < lampsE.length; i ++){
           lampsE[i].setStatus(result[1][i]);
         }
