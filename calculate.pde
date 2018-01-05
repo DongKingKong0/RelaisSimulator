@@ -70,6 +70,12 @@ void calculate(){
           lampsE[i].setStatus(result[1][i]);
         }
       }
+    }else{
+      for(int i = 0; i < lampsE.length; i ++){
+        lampsE.setStatus(false);
+      }
+      asPlus.setStatus(false);
+      asMinus.setStatus(true);
     }
   }
 }
