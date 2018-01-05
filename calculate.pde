@@ -72,7 +72,7 @@ void calculate(){
       }
     }else{
       for(int i = 0; i < lampsE.length; i ++){
-        lampsE.setStatus(false);
+        lampsE[i].setStatus(false);
       }
       asPlus.setStatus(false);
       asMinus.setStatus(true);
