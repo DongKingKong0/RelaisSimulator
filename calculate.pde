@@ -20,6 +20,10 @@ void calculate(){
     asPlus.setStatus(true);
     asMinus.setStatus(false);
   }else{
+    for(int i = 0; i < lampsU.length; i ++){
+      lampsU[i].setStatus(false);
+    }
+    
     boolean[][] rowStates = new boolean[2][lampsA.length];
     for(int i = 0; i < rowStates[0].length; i ++){
       rowStates[0][i] = lampsA[i].getStatus();
@@ -35,6 +39,7 @@ void calculate(){
       if(lampsA[firstLampIndex].getStatus()){
         asPlus.setStatus(true);
         asMinus.setStatus(false);
+        
         for(int i = 0; i < rowStates[0].length; i ++){
           rowStates[1][i] = !rowStates[1][i];
         }
@@ -46,13 +51,24 @@ void calculate(){
         }
         
         result = addition(states);
-        
         for(int i = 0; i < lampsE.length; i ++){
           lampsE[i].setStatus(result[1][i]);
         }
       }else{
         asPlus.setStatus(false);
         asMinus.setStatus(true);
+        
+        for(int i = 0; i < rowStates[0].length; i ++){
+          rowStates[1][i] = !rowStates[1][i];
+        }
+        boolean[][] result = addition(rowStates);
+        for(int i = 0; i < result[0].length; i ++){
+          result[0][i] = !result[0][i];
+        }
+        
+        for(int i = 0; i < lampsE.length; i ++){
+          lampsE[i].setStatus(result[1][i]);
+        }
       }
     }
   }

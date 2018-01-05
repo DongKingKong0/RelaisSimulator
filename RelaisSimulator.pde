@@ -45,6 +45,7 @@ void setup(){
   }
   noStroke();
   textAlign(CENTER);
+  frameRate(30);
 }
 
 
