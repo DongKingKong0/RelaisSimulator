@@ -24,7 +24,7 @@ void calculate(){
   asMinus.update();
   
   if(mode == 0){
-    int[] rowStates = new int[lampsE.length];
+    /*int[] rowStates = new int[lampsE.length];
     for(int i = 0; i < rowStates.length; i ++){
       rowStates[i] = 0;
       if(i > 0){
@@ -55,6 +55,18 @@ void calculate(){
           lampsU[i - 1].setStatus(false);
         }
       }
+    }*/
+    boolean[][] rowStates = new boolean[2][lampsA.length];
+    for(int i = 0; i < rowStates[0].length; i ++){
+      rowStates[0][i] = lampsA[i].getStatus();
+      rowStates[1][i] = lampsB[i].getStatus();
+    }
+    boolean[][] result = addition(rowStates);
+    for(int i = 0; i < result[0].length - 1; i ++){
+      lampsU[i].setStatus(result[0][i]);
+    }
+    for(int i = 0; i < result[0].length; i ++){
+      lampsE[i].setStatus(result[1][i]);
     }
     asPlus.setStatus(true);
     asMinus.setStatus(false);
@@ -120,91 +132,29 @@ void calculate(){
       }
     }
   }
-  
-  /*switch(mode){
-    case 0://plus
-    asPlus.setStatus(true);
-    asMinus.setStatus(false);
-    
-    for(int i = 0; i < lampsE.length; i ++){
-      lampsE[i].update();
-      int numberOfActiveBits = 0;
-      if(i > 0){
-        if(lampsA[i - 1].getStatus()){
-          numberOfActiveBits ++;
-        }
-        if(lampsB[i - 1].getStatus()){
-          numberOfActiveBits ++;
-        }
-      }
-      if(i < maxNumber){
-        if(lampsU[i].getStatus()){
-          numberOfActiveBits ++;
-        }
-      }
-      
+}
+
+
+boolean[][] addition(boolean[][] input){
+  boolean[][] output = new boolean[2][input[0].length + 1];
+  int maxI = output[0].length - 1;
+  for(int i = 0; i < maxI + 1; i ++){
+    int numberOfActiveBits;
+    if(i < maxI){
+      numberOfActiveBits = int(input[0][maxI - i - 1]) + int(input[1][maxI - i - 1]) + int(output[0][maxI - i]);
       if(numberOfActiveBits % 2 == 1){
-        lampsE[i].setStatus(true);
+        output[1][maxI - i] = true;
       }else{
-        lampsE[i].setStatus(false);
+        output[1][maxI - i] = false;
       }
-      if(i > 0){
-        if(numberOfActiveBits > 1){
-          lampsU[i - 1].setStatus(true);
-        }else{
-          lampsU[i - 1].setStatus(false);
-        }
+      if(numberOfActiveBits > 1){
+        output[0][maxI - i - 1] = true;
+      }else{
+        output[0][maxI - i - 1] = false;
       }
+    }else{
+      output[1][0] = output[0][0];
     }
-    break;
-    case 1://minus
-    for(int i = 0; i < lampsU.length; i ++){
-      lampsU[i].setStatus(false);
-    }
-    
-    
-    boolean asIsSet = false;
-    for(int i = 0; i < lampsA.length; i ++){
-      if(!asIsSet){
-        if(lampsA[i].getStatus() && !lampsB[i].getStatus()){
-          lampsE[i + 1].setStatus(false);
-          asPlus.setStatus(true);
-          asMinus.setStatus(false);
-          asIsSet = true;
-        }else if(lampsB[i].getStatus() && !lampsA[i].getStatus()){
-          asPlus.setStatus(false);
-          asMinus.setStatus(true);
-          asIsSet = true;
-        }else{
-          lampsE[i + 1].setStatus(false);
-        }
-      }
-      
-    if(!(lampsA[i].getStatus() && lampsB[i].getStatus()) && !(!lampsA[i].getStatus() && !lampsB[i].getStatus())){
-        lampsE[i + 1].setStatus(true);
-        if(asPlus.getStatus()){
-          int nextValidLamp = 0;
-          for(int j = 0; j < lampsA.length - i - 1; j ++){
-            if(lampsB[lampsA.length - j - 1].getStatus()){
-              nextValidLamp = lampsA.length - j - 1;
-            }
-          }
-          if(nextValidLamp > 0){
-            toggleLampsE(i + 1, nextValidLamp + 1);
-          }
-        }else{
-          int nextValidLamp = 0;
-          for(int j = 0; j < lampsA.length - i - 1; j ++){
-            if(lampsA[lampsA.length - j - 1].getStatus()){
-              nextValidLamp = lampsA.length - j - 1;
-            }
-          }
-          if(nextValidLamp > 0){
-            toggleLampsE(i + 1, nextValidLamp + 1);
-          }
-        }
-      }
-    }
-    break;
-  }*/
+  }
+  return output;
 }
