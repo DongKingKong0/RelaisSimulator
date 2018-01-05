@@ -38,42 +38,17 @@ void calculate(){
         for(int i = 0; i < rowStates[0].length; i ++){
           rowStates[1][i] = !rowStates[1][i];
         }
-        
-        boolean[] ans = new boolean[rowStates[0].length + 1];
-        boolean nextAs = false;
-        for(int i = 0; i < ans.length; i ++){
-          int numberOfActiveBits = 0;
-          if(i < ans.length - 1){
-            numberOfActiveBits = int(nextAs) + int(rowStates[0][ans.length - i - 2]) + int(rowStates[0][ans.length - i - 2]);
-            if(numberOfActiveBits % 2 == 1){
-              ans[ans.length - i - 2] = true;
-            }else{
-              ans[ans.length - i - 2] = false;
-            }
-            if(numberOfActiveBits > 1){
-              nextAs = true;
-            }else{
-              nextAs = false;
-            }
-          }else{
-            ans[ans.length - i - 1] = nextAs;
-          }
+        boolean[][] result = addition(rowStates);
+        boolean[][] states = new boolean[2][result[0].length - 1];
+        states[1][states[0].length - 1] = result[1][0];
+        for(int i = 0; i < states[0].length; i ++){
+          states[0][i] = result[1][i + 1];
         }
         
-        boolean[] as = new boolean[lampsA.length];
-        for(int i = 0; i < lampsA.length; i ++){
-          int numberOfActiveBits;
-          numberOfActiveBits = int(as[lampsA.length - i - 1]) + int(ans[lampsA.length - i - 1]);
-          if(numberOfActiveBits == 2){
-            as[ans.length - i - 2] = true;
-          }else{
-            as[ans.length - i - 2] = false;
-          }
-          if(numberOfActiveBits == 1){
-            lampsE[lampsA.length - i - 1].setStatus(true);
-          }else{
-            lampsE[lampsA.length - i - 1].setStatus(false);
-          }
+        result = addition(states);
+        
+        for(int i = 0; i < lampsE.length; i ++){
+          lampsE[i].setStatus(result[1][i]);
         }
       }else{
         asPlus.setStatus(false);
